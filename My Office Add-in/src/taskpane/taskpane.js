@@ -7,6 +7,7 @@
 import "../../assets/icon-16.png";
 import "../../assets/icon-32.png";
 import "../../assets/icon-80.png";
+//import { exitCode } from "process";
 //import { lineBreak } from "acorn";
 
 /* global document, Office, Word */
@@ -22,8 +23,10 @@ Office.onReady((info) => {
 export async function run() {
   return Word.run(async (context) => {
     let paragraph = context.document.body.paragraphs.getFirst();
-    paragraph.font.color = "blue";
-    while (paragraph !== null) {
+    //paragraph.font.color = "blue";
+    let count = 0;
+    while (count < 10) {
+      count = count + 1;
       paragraph.font.color = "blue";
       paragraph = paragraph.getNextOrNullObject();
     }
@@ -33,7 +36,6 @@ export async function run() {
 
     // change the paragraph color to blue.
     //paragraph.font.color = "blue";
-
     await context.sync();
   });
 }
