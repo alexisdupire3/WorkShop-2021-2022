@@ -68,11 +68,12 @@ export async function run() {
     return context.sync()
       .then(() => {
         let ranges = paragraphs.items[0].getTextRanges([','], true);
+        console.log( paragraphs.items[0].text);
         ranges.load();
         return context.sync()
           .then(() => {
             ranges.items.forEach((range) => {
-              console.log(range.text);
+            //  console.log(range.text);
             });
           });
       });
