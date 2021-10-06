@@ -67,7 +67,7 @@ export async function run() {
     
     return context.sync()
       .then(() => {
-        let ranges = paragraphs.items[0].getTextRanges(['.'], true);
+        let ranges = paragraphs.items[0].getTextRanges([','], true);
         ranges.load();
         return context.sync()
           .then(() => {
