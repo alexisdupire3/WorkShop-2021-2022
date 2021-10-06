@@ -22,14 +22,61 @@ Office.onReady((info) => {
 
 export async function run() {
   return Word.run(async (context) => {
-    let paragraph = context.document.body.paragraphs.getFirst();
-    //paragraph.font.color = "blue";
-    let count = 0;
-    while (count < 10) {
-      count = count + 1;
-      paragraph.font.color = "blue";
-      paragraph = paragraph.getNextOrNullObject();
-    }
+    // await context.sync();
+
+    // var list = [];
+
+    // let firstParagraph = context.document.body.paragraphs.getFirst();
+    // let currentParagraph = firstParagraph;
+    // let lastParagraph = context.document.body.paragraphs.getLast();
+    // let nombreParagraph = 1;
+
+    // try {
+    //   while (currentParagraph !== lastParagraph) {
+    //     // if (currentParagraph == lastParagraph)
+    //     //   return console.log("On a trouvé le dernier paragraphe, on abort")
+    //     currentParagraph.font.color = "blue";
+    //     nombreParagraph = nombreParagraph + 1;
+    //     list.push(currentParagraph);
+    //     console.log(`${list.length} tagada`);
+
+    //     currentParagraph = await currentParagraph.getNext();
+    //     await context.sync();
+    //   }
+    // } catch (e) {
+    //   if (e.code == "ItemNotFound") {
+    //     console.warn("[ERREUR] Pas possible d'aller plus loin dans la boucle")
+    //   } else {
+    //     console.warn("Erreur sur la boucle");
+    //     console.warn(e);
+    //     // currentParagraph.font.color = "red";
+    //     return await context.sync();
+    //   }
+    // }
+
+    // console.log("test")
+    // console.log(`Il y'a ${list.length} paragraphes`)
+
+    // console.log("Test")
+    // console.log(list);
+
+    const range = context.document.getSelection();
+    
+    const paragraphs = range.paragraphs;
+    paragraphs.load();
+    
+    return context.sync()
+      .then(() => {
+        let ranges = paragraphs.items[0].getTextRanges(['.'], true);
+        ranges.load();
+        return context.sync()
+          .then(() => {
+            ranges.items.forEach((range) => {
+              console.log(range.text);
+            });
+          });
+      });
+
 
     // insert a paragraph at the end of the document.
     //const paragraph = context.document.body.paragraphs.getLast();
