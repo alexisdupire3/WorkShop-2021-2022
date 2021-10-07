@@ -1,0 +1,11 @@
+.text_modifier span{
+    filter:blur(4px);
+    transition: all 0.3s ease-in-out;
+    flex-wrap: wrap
+}
+.text_modifier span.display{
+    filter:blur(0px);
+    font-size:1.4rem;
+    color:red;
+    font-weight:bolder;
+}

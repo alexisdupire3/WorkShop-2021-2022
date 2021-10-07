@@ -22,72 +22,52 @@ Office.onReady((info) => {
 
 export async function run() {
   return Word.run(async (context) => {
-    // await context.sync();
 
-    // var list = [];
-
-    // let firstParagraph = context.document.body.paragraphs.getFirst();
-    // let currentParagraph = firstParagraph;
-    // let lastParagraph = context.document.body.paragraphs.getLast();
-    // let nombreParagraph = 1;
-
-    // try {
-    //   while (currentParagraph !== lastParagraph) {
-    //     // if (currentParagraph == lastParagraph)
-    //     //   return console.log("On a trouvé le dernier paragraphe, on abort")
-    //     currentParagraph.font.color = "blue";
-    //     nombreParagraph = nombreParagraph + 1;
-    //     list.push(currentParagraph);
-    //     console.log(`${list.length} tagada`);
-
-    //     currentParagraph = await currentParagraph.getNext();
-    //     await context.sync();
-    //   }
-    // } catch (e) {
-    //   if (e.code == "ItemNotFound") {
-    //     console.warn("[ERREUR] Pas possible d'aller plus loin dans la boucle")
-    //   } else {
-    //     console.warn("Erreur sur la boucle");
-    //     console.warn(e);
-    //     // currentParagraph.font.color = "red";
-    //     return await context.sync();
-    //   }
-    // }
-
-    // console.log("test")
-    // console.log(`Il y'a ${list.length} paragraphes`)
-
-    // console.log("Test")
-    // console.log(list);
-
-    const range = context.document.body;  
+    const range = context.document.body;
     const paragraphs = range.paragraphs;
     paragraphs.load();
-    
-    return context.sync()
-      .then(() => {
+
+    return await context.sync()
+      .then(async () => {
+        //Tableau qui stock les paragraphes
+        // /** @type {Word.ParagraphCollection} */
+        // let arrayRanges = [];
+        // let i = 0;
+
+        //Boucle while qui recup tous les paragraphes en découpant à chaque "."
+        // while (paragraphs.items.length > i) {
+        //   console.log(paragraphs.items[i]);
+        //   arrayRanges.push(paragraphs.items[i].getTextRanges(['.'], true));
+        //   i++;
+        // }
+        //paragraphs.items[0].getTextRanges(['.'], true);
+
         let arrayRanges = [];
-        for (let i=0; paragraphs.items.length; i++){
-            console.log(paragraphs.items[i]);
-            arrayRanges.push(paragraphs.items[i].getTextRanges(['.'], true));
-        }         
-        // let ranges = paragraphs.items[1].getTextRanges(['.'], true);
-        // console.log( paragraphs.items.length);
-        arrayRanges.load();
-        return context.sync()
-          .then(() => {
-            arrayRanges.items.forEach((range) => {           
-              console.log(range.text);
+        let ranges;
+        for (var i = 0; i < paragraphs.items.length; i++) {
+          ranges = paragraphs.items[i].getTextRanges(['.'], true);
+          ranges.load();
+          context.sync()
+            .then(() => {
+              ranges.items.forEach((range) => {
+                //console.log(range);
+              });
             });
-          });
+        }
+        console.log(ranges.getFirst());
+        //  console.log(arrayRanges)
+        //console.log(paragraphs.items[0]);
+        // console.log(paragraphs.items.length);
+        // ranges.load();
+
+        // return context.sync()
+        //   .then(() => {
+        //     arrayRanges.forEach((range) => {
+        //       console.log(range.text);
+        //     });
+        //   });
+
       });
-
-
-    // insert a paragraph at the end of the document.
-    //const paragraph = context.document.body.paragraphs.getLast();
-
-    // change the paragraph color to blue.
-    //paragraph.font.color = "blue";
     await context.sync();
   });
 }
