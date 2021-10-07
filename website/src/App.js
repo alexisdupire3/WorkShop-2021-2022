@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import TextModifier from './components/TextModifier/TextModifier';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [text, setText] = useState('');
@@ -13,9 +14,8 @@ function App() {
   return (
     <div className="App">
       <TextModifier split={splitter}>{text}</TextModifier>
-      <div className="panel">
-        <textarea value={text} onChange={handleChangeText}/>
-        <input classname="splitter" type="text" value={splitter} onChange={handleChangeSplitter} />
+      <div className="panel" ><textarea value={text} onChange={handleChangeText}/>
+          <input className="splitter" type="text" value={splitter} onChange={handleChangeSplitter} />
       </div>
     </div>
   );

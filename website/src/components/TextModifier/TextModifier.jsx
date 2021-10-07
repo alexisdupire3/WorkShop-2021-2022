@@ -33,7 +33,7 @@ const TextModifier = ({children, split}) => {
   },[]);
   return (
     <p className="text_modifier">
-        { words.map((word,key) =><span key={key} className={index===key ? 'display' : ''} onClick={()=>{setIndex(key)}}>{word}{split}</span>)}
+       { words.map((word,key) =><span key={key} className={index===key ? 'display' : ''} onClick={()=>{setIndex(key)}}>{word}{split}</span>)}
     </p>
   );
 }
