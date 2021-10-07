@@ -60,20 +60,24 @@ export async function run() {
     // console.log("Test")
     // console.log(list);
 
-    const range = context.document.getSelection();
-    
+    const range = context.document.body;  
     const paragraphs = range.paragraphs;
     paragraphs.load();
     
     return context.sync()
       .then(() => {
-        let ranges = paragraphs.items[0].getTextRanges([','], true);
-        console.log( paragraphs.items[0].text);
-        ranges.load();
+        let arrayRanges = [];
+        for (let i=0; paragraphs.items.length; i++){
+            console.log(paragraphs.items[i]);
+            arrayRanges.push(paragraphs.items[i].getTextRanges(['.'], true));
+        }         
+        // let ranges = paragraphs.items[1].getTextRanges(['.'], true);
+        // console.log( paragraphs.items.length);
+        arrayRanges.load();
         return context.sync()
           .then(() => {
-            ranges.items.forEach((range) => {
-            //  console.log(range.text);
+            arrayRanges.items.forEach((range) => {           
+              console.log(range.text);
             });
           });
       });
